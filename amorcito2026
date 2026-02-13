@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Para ti ❤️</title>
+  <style>
+    :root{
+      --bg1:#0b0b12;
+      --bg2:#1a0f2e;
+      --card:#ffffff10;
+      --text:#fff;
+      --muted:#ffffffb0;
+      --accent:#ff4da6;
+      --accent2:#7c5cff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: radial-gradient(1200px 800px at 20% 10%, #2a1a52, transparent 55%),
+                  radial-gradient(900px 700px at 80% 90%, #3a1040, transparent 55%),
+                  linear-gradient(160deg, var(--bg1), var(--bg2));
+      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      overflow:hidden;
+      padding:24px;
+    }
+    .glow{
+      position:absolute; inset:-200px;
+      background: conic-gradient(from 180deg, #ff4da650, #7c5cff50, #00ffd550, #ff4da650);
+      filter: blur(60px);
+      animation: spin 14s linear infinite;
+      opacity:.55;
+      pointer-events:none;
+    }
+    @keyframes spin{ to{ transform: rotate(360deg);} }
+
+    .card{
+      position:relative;
+      width:min(720px, 100%);
+      background: linear-gradient(180deg, #ffffff14, #ffffff08);
+      border:1px solid #ffffff20;
+      box-shadow: 0 20px 70px #00000070;
+      border-radius:24px;
+      padding:28px;
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+    .title{
+      font-size: clamp(26px, 3.2vw, 40px);
+      margin:0 0 8px 0;
+      letter-spacing:.2px;
+    }
+    .subtitle{
+      margin:0 0 18px 0;
+      color:var(--muted);
+      line-height:1.35;
+      font-size: clamp(14px, 1.6vw, 16px);
+    }
+    .pill{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:10px 14px;
+      border-radius:999px;
+      background: #ffffff12;
+      border:1px solid #ffffff20;
+      color:#fff;
+      font-weight:600;
+      font-size:14px;
+      user-select:none;
+    }
+    .row{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      margin-top:16px;
+    }
+    @media (max-width: 780px){
+      .row{ grid-template-columns: 1fr; }
+    }
+    .panel{
+      background:#00000020;
+      border:1px solid #ffffff18;
+      border-radius:18px;
+      padding:18px;
+    }
+    .msg{
+      font-size: clamp(15px, 1.7vw, 18px);
+      line-height:1.6;
+      color:#ffffffee;
+      margin:0;
+      white-space:pre-wrap;
+    }
+    .btn{
+      width:100%;
+      margin-top:14px;
+      padding:14px 16px;
+      border-radius:16px;
+      border:none;
+      cursor:pointer;
+      font-weight:800;
+      color:white;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 10px 30px #ff4da645;
+      transition: transform .08s ease, filter .2s ease;
+    }
+    .btn:active{ transform: scale(.98); }
+    .btn:hover{ filter: brightness(1.05); }
+
+    .gifwrap{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+      min-height:260px;
+      text-align:center;
+    }
+    .gif{
+      width:min(260px, 85%);
+      border-radius:18px;
+      border:1px solid #ffffff25;
+      box-shadow: 0 14px 40px #00000080;
+      display:none;
+    }
+    .hint{
+      color:var(--muted);
+      font-size:14px;
+      margin:0;
+    }
+
+    /* floating hearts */
+    .heart{
+      position:absolute;
+      bottom:-40px;
+      font-size:18px;
+      opacity:.9;
+      animation: floatUp linear forwards;
+      pointer-events:none;
+      filter: drop-shadow(0 6px 8px #00000080);
+    }
+    @keyframes floatUp{
+      to{
+        transform: translateY(-120vh) translateX(var(--dx));
+        opacity:0;
+      }
+    }
+
+    .small{
+      margin-top:12px;
+      color:#ffffffa8;
+      font-size:12px;
+      text-align:center;
+    }
+    a{ color:#fff; }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+
+  <main class="card">
+    <div class="pill">💌 Para mi amor</div>
+    <h1 class="title">Tengo algo para ti ❤️</h1>
+    <p class="subtitle">
+      Haz clic en el botón… y mira lo que aparece.  
+      (Prometo que es cursi, pero real 😅)
+    </p>
+
+    <section class="row">
+      <div class="panel">
+        <p id="message" class="msg"></p>
+        <button id="btn" class="btn">Haz clic aquí ✨</button>
+        <div class="small">— con amor, Lucas</div>
+      </div>
+
+      <div class="panel gifwrap">
+        <img id="gif" class="gif" alt="Un gif para ti"
+          src="https://media.giphy.com/media/l4FGpP4lxGGgK5CBW/giphy.gif" />
+        <p id="hint" class="hint">👀 (El gif aparece cuando presionas el botón)</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ✅ Mensaje em espanhol (edite como quiser)
+    const texto = `
+Mi amor,
+
+No quería repetir lo de siempre… así que te hice esto.
+Porque tú mereces detalles que tengan tu nombre en mi mente y mi corazón.
+
+Gracias por estar conmigo, por tu paciencia, por tu forma de quererme,
+y por hacer que mi vida se sienta más ligera incluso en días pesados.
+
+Te elijo hoy, mañana y todas las veces.
+Eres mi persona favorita.
+
+Con todo mi amor,
+Lucas ❤️
+`;
+
+    // Efeito "digitando"
+    const el = document.getElementById("message");
+    let i = 0;
+    function type() {
+      if (i <= texto.length) {
+        el.textContent = texto.slice(0, i++);
+        requestAnimationFrame(type);
+      }
+    }
+    type();
+
+    const btn = document.getElementById("btn");
+    const gif = document.getElementById("gif");
+    const hint = document.getElementById("hint");
+
+    function spawnHearts() {
+      const hearts = ["❤️","💖","💘","💕","💗","✨"];
+      for (let k = 0; k < 24; k++) {
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        h.style.left = Math.random() * 100 + "vw";
+        h.style.fontSize = (14 + Math.random() * 22) + "px";
+        h.style.animationDuration = (2.5 + Math.random() * 2.8) + "s";
+        h.style.setProperty("--dx", (Math.random() * 140 - 70) + "px");
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 6000);
+      }
+    }
+
+    btn.addEventListener("click", () => {
+      gif.style.display = "block";
+      hint.textContent = "Te amo muchísimo 😭❤️";
+      spawnHearts();
+      btn.textContent = "Otra vez 😄";
+    });
+  </script>
+</body>
+</html>
