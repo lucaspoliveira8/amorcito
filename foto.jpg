@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Mi Amor 💘</title>
+
+<style>
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ffe6f0, #ffd6ec, #fff0f5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    overflow: hidden;
+}
+
+h1{
+    color: #e60073;
+    font-size: 32px;
+}
+
+button{
+    padding: 15px 35px;
+    font-size: 18px;
+    border: none;
+    border-radius: 40px;
+    background: linear-gradient(45deg, #ff4d88, #ff99cc);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 0, 102, 0.3);
+}
+
+button:hover{
+    transform: scale(1.05);
+}
+
+.container{
+    display: none;
+    margin-top: 50px;
+    align-items: center;
+    gap: 50px;
+    background: white;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(255, 105, 180, 0.2);
+    animation: aparecer 1s ease forwards;
+}
+
+@keyframes aparecer{
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.mensaje{
+    max-width: 400px;
+    font-size: 20px;
+    color: #cc0066;
+    text-align: left;
+    line-height: 1.6;
+}
+
+img{
+    width: 300px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+}
+
+/* Corazones flotando */
+.corazon{
+    position: absolute;
+    color: #ff4d88;
+    font-size: 20px;
+    animation: flotar 6s linear infinite;
+}
+
+@keyframes flotar{
+    from{
+        transform: translateY(100vh);
+        opacity: 1;
+    }
+    to{
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<h1>Haz clic aquí mi amor 💕</h1>
+<button onclick="mostrarMensaje()">Ver mensaje</button>
+
+<div class="container" id="contenido">
+    <div class="mensaje">
+        Mi amor...  
+        Cada momento contigo es un regalo.  
+        Eres mi paz, mi fuerza y mi felicidad.  
+        Te amo más de lo que las palabras pueden explicar 💖  
+    </div>
+
+    <img src="foto.jpg">
+</div>
+
+<script>
+function mostrarMensaje(){
+    document.getElementById("contenido").style.display = "flex";
+}
+
+/* Generar corazones */
+function crearCorazon(){
+    const corazon = document.createElement("div");
+    corazon.classList.add("corazon");
+    corazon.innerHTML = "💖";
+    corazon.style.left = Math.random() * 100 + "vw";
+    corazon.style.fontSize = (Math.random() * 20 + 10) + "px";
+    corazon.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(corazon);
+
+    setTimeout(() => {
+        corazon.remove();
+    }, 6000);
+}
+
+setInterval(crearCorazon, 800);
+</script>
+
+</body>
+</html>
